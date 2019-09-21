@@ -5,6 +5,7 @@ import androidx.gridlayout.widget.GridLayout;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private void initView() {
         LinearLayout ll_myChartView = findViewById(R.id.ll_myChartView);
         ll_text = findViewById(R.id.gl);
-        double[] doubles = new double[]{0, 1, 0, 10, 0, 0, 0, 20, 30, 10};
+        double[] doubles = new double[]{0,0, 0, 300, 1000, 100, 3000, 40, 800, 950, 200, 300, 100};
         LayoutInflater inflater = LayoutInflater.from(this);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.weight = 1;
@@ -83,14 +84,11 @@ public class MainActivity extends AppCompatActivity {
         int year0;
         int month0;
         int half = 0;
-        if (doubles.length % 2 == 0) {
-            half = doubles.length / 2;
-        } else {
-            half = doubles.length / 2 - 1;
-
-        }
+        half = doubles.length / 2;
+        Log.e("test", "half = " + half);
+        Log.e("test", "doubles.length = " + doubles.length);
 //        int[] months = new int[doubles.length];
-        for (int i = -half; i < half ; i++) {
+        for (int i = -half; i < (doubles.length % 2 == 0 ? half : half + 1); i++) {
             if (month + i < 0) {
                 year0 = year - 1;
                 month0 = 12 - (month + i);
