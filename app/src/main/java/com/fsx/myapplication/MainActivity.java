@@ -36,22 +36,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     MyChartView myChartView;
-    GridLayout gridLayout;
+    LinearLayout ll_text;
     MyChartView2 myChartView2;
 
     private void initView() {
         LinearLayout ll_myChartView = findViewById(R.id.ll_myChartView);
-        gridLayout = findViewById(R.id.gl);
+        ll_text = findViewById(R.id.gl);
         double[] doubles = new double[]{0, 1, 0, 10, 0, 0, 0, 20, 30, 10};
         LayoutInflater inflater = LayoutInflater.from(this);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.weight = 1;
+        TextView textView;
         for (int i = 0; i < doubles.length; i++) {
-            TextView textView = (TextView) inflater.inflate(R.layout.textview_003, null);
-            gridLayout.addView(textView);
+            textView = (TextView) inflater.inflate(R.layout.textview_003, null);
+            textView.setLayoutParams(params);
+            ll_text.addView(textView);
         }
         myChartView = new MyChartView(this, doubles);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+        LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT);
-        myChartView.setLayoutParams(params);
+        myChartView.setLayoutParams(params2);
         myChartView.setBackgroundResource(R.color.white);//不设置背景 不显示折线
         ll_myChartView.addView(myChartView);
         for (int i = 0; i < doubles.length; i++) {
@@ -60,8 +64,8 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     myChartView.setVisibility(cur);
-                    ((TextView) gridLayout.getChildAt(cur)).setTextColor(Color.RED);
-                    ((TextView) gridLayout.getChildAt(curItem)).setTextColor(Color.BLUE);
+                    ((TextView) ll_text.getChildAt(cur)).setTextColor(Color.RED);
+                    ((TextView) ll_text.getChildAt(curItem)).setTextColor(Color.BLUE);
                     curItem = cur;
 
                     if (cur % 2 == 0) {
@@ -78,15 +82,15 @@ public class MainActivity extends AppCompatActivity {
         int month = calendar.get(Calendar.MONTH) + 1;//月
         int year0;
         int month0;
-        int helf = 0;
+        int half = 0;
         if (doubles.length % 2 == 0) {
-            helf = doubles.length / 2;
+            half = doubles.length / 2;
         } else {
-            helf = doubles.length / 2 - 1;
+            half = doubles.length / 2 - 1;
 
         }
 //        int[] months = new int[doubles.length];
-        for (int i = -helf; i < helf - 1; i++) {
+        for (int i = -half; i < half ; i++) {
             if (month + i < 0) {
                 year0 = year - 1;
                 month0 = 12 - (month + i);
@@ -100,10 +104,10 @@ public class MainActivity extends AppCompatActivity {
 //            months[i + helf] = month0;
 
             if (i == 0) {
-                ((TextView) gridLayout.getChildAt(i + helf)).setText("当月");
+                ((TextView) ll_text.getChildAt(i + half)).setText("当月");
             } else {
                 String time = month0 + "月\n" + year0;
-                ((TextView) gridLayout.getChildAt(i + helf)).setText(time);
+                ((TextView) ll_text.getChildAt(i + half)).setText(time);
             }
         }
     }
